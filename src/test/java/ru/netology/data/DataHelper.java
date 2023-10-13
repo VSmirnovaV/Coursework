@@ -28,6 +28,14 @@ public class DataHelper {
         return new CardsInfo("5555 6666 7777 8888", "DECLINED");
     }
 
+    public static String getCardWithZeros() {
+        return "0000 0000 0000 0000";
+    }
+
+    public static String getCardWith15Sign() {
+        return "1111 2222 3333 444";
+    }
+
     public static String getRandomOwner() {
         String owner = faker.name().fullName();
         return owner;
@@ -46,18 +54,28 @@ public class DataHelper {
         String number = fakerRu.number().digits(7);
         return number;
     }
+
     public static String getRandomNumber1() {
         String number = fakerRu.number().digits(1);
         return number;
     }
+    public static String getSign1() {
+        String sign = "f";
+        return sign;
+    }
+
+    public static String getSign21() {
+        String sign = "fffffffffffffffffffff";
+        return sign;
+    }
+
+    public static String getSign20() {
+        String sign = "ffffffffffffffffffff";
+        return sign;
+    }
 
     public static String getRandomNumber2() {
         String number = fakerRu.number().digits(2);
-        return number;
-    }
-
-    public static String getRandomNumber31() {
-        String number = fakerRu.number().digits(31);
         return number;
     }
 
@@ -68,11 +86,6 @@ public class DataHelper {
 
     public static String specialSign() {
         return "@#$%&%$#";
-    }
-
-    public static String getInvalidRandomCVC() {
-        String cvc = faker.number().digits(2);
-        return cvc;
     }
 
     public static String generateValidMonth() {
