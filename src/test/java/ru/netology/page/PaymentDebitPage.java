@@ -6,32 +6,31 @@ import org.openqa.selenium.Keys;
 
 import java.time.Duration;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class PaymentDebitPage {
+    private final SelenideElement payForm = $(byText("Оплата по карте"));
     private final SelenideElement cardNumber = $("[placeholder='0000 0000 0000 0000']");
-    private final SelenideElement emptyFieldCardNumber = $(byText("Неверный формат"));
-    private final SelenideElement monthField = $("[placeholder='08']");
-    private final SelenideElement invalidMonthField = $(byText("Неверно указан срок действия карты"));
     private final SelenideElement wrongFormat = $(byText("Неверный формат"));
-    private final SelenideElement emptyFieldMonth = $(byText("Неверный формат"));
+    private final SelenideElement monthField = $("[placeholder='08']");
+    private final SelenideElement invalidValidity = $(byText("Неверно указан срок действия карты"));
     private final SelenideElement yearField = $("[placeholder='22']");
     private final SelenideElement lustYear = $(byText("Истёк срок действия карты"));
-    private final SelenideElement invalidYear = $(byText("Неверно указан срок действия карты"));
-    private final SelenideElement emptyFieldYear = $(byText("Неверный формат"));
     private final SelenideElement ownerField = $$(".input__control").get(3);
-    private final SelenideElement emptyFieldOwner = $(byText("Поле обязательно для заполнения"));
-    private final SelenideElement emptyOwnerError = $(byText("Неверный формат"));
-    private final SelenideElement spaceWithFieldOwner = $(byText("Поле обязательно для заполнения"));
+    private final SelenideElement obligatoryField = $(byText("Поле обязательно для заполнения"));
     private final SelenideElement cvcField = $("[placeholder='999']");
-    private final SelenideElement invalidCvc = $(byText("Неверный формат"));
-    private final SelenideElement emptyFieldCvc = $(byText("Неверный формат"));
     private final SelenideElement continueButton = $(byText("Продолжить"));
     private final SelenideElement error = $(byText("Ошибка! Банк отказал в проведении операции."));
     private final SelenideElement successMessage = $(byText("Операция одобрена Банком."));
+
+
+    public PaymentDebitPage () {
+        payForm.shouldHave(exactText("Оплата по карте"));
+    }
 
     public void payDebitCard(String number, String month, String year, String owner, String cvc) {
         cardNumber.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
@@ -52,58 +51,61 @@ public class PaymentDebitPage {
     }
 
     public void payNoSuccessfullyDebitCard() {
-        error.shouldBe(visible, Duration.ofSeconds(15));
+        error.shouldBe(visible, Duration.ofSeconds(4));
     }
 
-    public void EmptyFieldCardNumber() {
-        emptyFieldCardNumber.shouldBe(visible, Duration.ofSeconds(15));
+    public void emptyFieldCardNumber() {
+        wrongFormat.shouldBe(visible);
+    }
+    public void invalidCard() {
+        wrongFormat.shouldBe(visible);
     }
 
-    public void EmptyFieldMonth() {
-        emptyFieldMonth.shouldBe(visible, Duration.ofSeconds(15));
+    public void emptyFieldMonth() {
+        wrongFormat.shouldBe(visible);
     }
 
-    public void EmptyFieldYear() {
-        emptyFieldYear.shouldBe(visible, Duration.ofSeconds(15));
+    public void emptyFieldYear() {
+        wrongFormat.shouldBe(visible);
     }
 
-    public void EmptyFieldOwner() {
-        emptyFieldOwner.shouldBe(visible, Duration.ofSeconds(15));
+    public void emptyFieldOwner() {
+        obligatoryField.shouldBe(visible);
     }
 
-    public void EmptyFieldCvc() {
-        emptyFieldCvc.shouldBe(visible, Duration.ofSeconds(15));
+    public void emptyFieldCvc() {
+        wrongFormat.shouldBe(visible);
     }
 
     public void wrongFormatMonth() {
-        wrongFormat.shouldBe(visible, Duration.ofSeconds(15));
+        wrongFormat.shouldBe(visible);
     }
 
     public void invalidMonth() {
-        invalidMonthField.shouldBe(visible, Duration.ofSeconds(15));
+        invalidValidity.shouldBe(visible);
     }
 
     public void invalidYear() {
-        invalidYear.shouldBe(visible, Duration.ofSeconds(15));
+        invalidValidity.shouldBe(visible);
     }
 
     public void invalidLastYear() {
-        lustYear.shouldBe(visible, Duration.ofSeconds(15));
+        lustYear.shouldBe(visible);
     }
 
     public void spacesWithFieldOwner() {
-        spaceWithFieldOwner.shouldBe(visible, Duration.ofSeconds(15));
+        obligatoryField.shouldBe(visible);
     }
 
     public void invalidCvc() {
-        invalidCvc.shouldBe(visible, Duration.ofSeconds(15));
+        wrongFormat.shouldBe(visible);
     }
 
     public void invalidOwner() {
-        emptyOwnerError.shouldBe(visible, Duration.ofSeconds(15));
+        wrongFormat.shouldBe(visible);
     }
 
     public void invalidSpecialSign() {
-        emptyOwnerError.shouldBe(visible, Duration.ofSeconds(15));
+        wrongFormat.shouldBe(visible);
     }
 }

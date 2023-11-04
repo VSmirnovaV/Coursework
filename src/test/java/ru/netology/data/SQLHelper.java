@@ -18,28 +18,26 @@ public class SQLHelper {
 
     @SneakyThrows
     public static void clearDB() {
-        try (var connection = getConnection()) {
-            runner.execute(connection, "DELETE FROM credit_request_entity");
-            runner.execute(connection, "DELETE FROM order_entity");
-            runner.execute(connection, "DELETE FROM payment_entity");
-        }
+        Connection conn = getConnection();
+            runner.execute(conn, "DELETE FROM credit_request_entity");
+            runner.execute(conn, "DELETE FROM order_entity");
+            runner.execute(conn, "DELETE FROM payment_entity");
     }
 
     @SneakyThrows
     public static String getDebitPaymentStatus() {
         String SqlStatus = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
-        try (var connection = getConnection()) {
-            String result = runner.query(connection, SqlStatus, new ScalarHandler<>());
+        Connection conn = getConnection();
+            String result = runner.query(conn, SqlStatus, new ScalarHandler<>());
             return result;
-        }
     }
 
     @SneakyThrows
     public static String getCreditPaymentStatus() {
         String SqlStatus = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1";
-        try (var connection = getConnection()) {
-            String result = runner.query(connection, SqlStatus, new ScalarHandler<>());
+        Connection conn = getConnection();
+            String result = runner.query(conn, SqlStatus, new ScalarHandler<>());
             return result;
-        }
     }
 }
+
